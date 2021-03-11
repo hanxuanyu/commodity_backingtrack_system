@@ -1,0 +1,7 @@
+{
+  "server": "0.0.0.0",
+  "calc_port": "5002",
+  "add_port": "5001",
+  "signal_port": "5003",
+  "client_num": 3
+}

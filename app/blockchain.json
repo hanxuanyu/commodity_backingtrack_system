@@ -1,0 +1,11 @@
+{
+    "chain": [
+        {
+            "index": 1,
+            "content": {},
+            "proof": 100,
+            "previous_hash": "0000xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        }
+    ],
+    "length": 1
+}

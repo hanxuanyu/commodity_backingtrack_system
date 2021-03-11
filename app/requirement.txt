@@ -1,0 +1,6 @@
+flask
+flask-sqlalchemy
+mysqlclient
+flask-script
+flask-debugtoolbar
+zmq

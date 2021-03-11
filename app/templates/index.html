@@ -1,0 +1,141 @@
+{%extends "common/layout.html"%}
+{%block title%}
+商品溯源系统
+{%endblock%}
+
+{%block disc%}
+首页
+{%endblock%}
+{%block content%}
+
+<div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">
+                商品列表
+            </div>
+        </div>
+        <div class="panel-body">
+            <span style="font-size: 20px">您好! {{current_user.name}},您的身份是:{{current_user.type}}</span>
+            <div class="btn-group  pull-right" role="group" aria-label="...">
+                <button type="button" id="refresh_com" class="btn btn-group">
+                    刷新
+                </button>
+                {%if current_user.type == "经销商"%}
+                <button type="button" id="add_com" class="btn btn-success" data-toggle="modal" data-target="#addModal">
+                    上架
+                </button>
+                {%endif%}
+            </div>
+        </div>
+        {%if com_list%}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>id</th>
+                <th>商品名</th>
+                <th>产地</th>
+                <th>状态</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {%for coms in com_list%}
+            <tr>
+                <th scope="row">{{coms.id}}</th>
+                <td>{{coms.name}}</td>
+                <td>{{coms.origin}}</td>
+                <td><span class="badge" style="background-color: #5cb85c">{{coms.status}}</span></td>
+                <td>
+                    <div class="btn-group pull-right" id=com_id_{{coms.id}} role="group" aria-label="...">
+                        <a href="/blockchain/info?comid={{coms.id}}" type="button" class="btn btn-primary" target="_blank">溯源</a>
+                        {%if coms.status in ["出售中"] and current_user.type in ["经销商"]%}
+                        <button type="button" class="btn btn-danger com_ops_del">
+                            下架
+                        </button>
+                        {%endif%}
+                        {%if coms.status in ["出售中"] and current_user.type in ["超市管理员"] %}
+                        <button type="button" class="btn btn-warning com_ops_buy">
+                            下单
+                        </button>
+                        {%endif%}
+
+                        {%if coms.status in ["待发货"] and current_user.type in ["经销商"] %}
+                        <button type="button" class="btn btn-warning com_ops_send">
+                            发货
+                        </button>
+                        {%endif%}
+                        {%if coms.status in ["已发货"] and current_user.type in ["运输商"] %}
+                        <button type="button" class="btn btn-info com_ops_trans">
+                            运输
+                        </button>
+                        {%endif%}
+                        {%if coms.status in ["运输中"] and current_user.type in ["仓库管理员"] %}
+                        <button type="button" class="btn btn-success com_ops_warehouse">
+                            入库
+                        </button>
+                        {%endif%}
+                        {%if coms.status in ["已入库"] and current_user.type in ["仓库管理员"] %}
+                        <button type="button" class="btn btn-primary com_ops_distribution">
+                            分发
+                        </button>
+                        {%endif%}
+                        {%if coms.status in ["已分发"] and current_user.type in ["超市管理员"] %}
+                        <button type="button" class="btn btn-default com_ops_sale">
+                            销售
+                        </button>
+                        {%endif%}
+
+                    </div>
+                </td>
+
+            </tr>
+            {%endfor%}
+            </tbody>
+        </table>
+        {%else%}
+        <div class="alert alert-danger" role="alert">暂时没有可查看的商品,请刷新再试</div>
+        {%endif%}
+    </div>
+</div>
+
+{%if current_user.type == "经销商" %}
+<!--添加商品的表单提示框-->
+<div class="modal fade commodiy_add" id="addModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="exampleModalLabel">添加商品</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+
+                    <div class="form-group">
+                        <label for="name" class="control-label">商品名</label>
+                        <input type="text" class="form-control" id="name" name="name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="origin" class="control-label">商品产地</label>
+                        <input type="text" class="form-control" id="origin" name="origin">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-success add">确认上架</button>
+            </div>
+        </div>
+    </div>
+</div>
+{%endif%}
+当前用户:{{current_user.name}}<br>
+当前用户类型:{{current_user.type}}<br>
+当前用户ID:{{current_user.id}}<br>
+{%endblock%}
+
+{%block js%}
+<script src="{{build_static_url('/js/commodity/commodity.js')}}"></script>
+{%endblock%}

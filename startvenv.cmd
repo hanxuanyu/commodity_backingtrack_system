@@ -1,0 +1,2 @@
+powershell
+venv\scripts\activate

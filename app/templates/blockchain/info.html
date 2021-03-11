@@ -1,0 +1,63 @@
+{%extends "common/layout.html"%}
+{%block title%}
+商品溯源系统
+{%endblock%}
+
+{%block disc%}
+商品详情-区块链
+{%endblock%}
+{%block content%}
+
+<div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">
+                以下为商品【{{current_com.name}}】的溯源信息
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="pull-left">
+                下面的信息只显示已经存储在区块中的信息,区块链收录商品操作记录需要一定时间,请您等待后点击右侧刷新按钮
+            </div>
+            <div class="btn-group  pull-right" role="group" aria-label="...">
+                <button type="button" id="refresh_com" class="btn btn-group">
+                    刷新
+                </button>
+            </div>
+        </div>
+        {%if ops_list%}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>操作人</th>
+                <th>操作类型</th>
+                <th>操作时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            {%for ops in ops_list%}
+            <tr>
+                <td>1</td>
+                <td>{{ops.operator}}</td>
+                <td>{{ops.option}}</td>
+                <td>{{ops.time}}</td>
+            </tr>
+            {%endfor%}
+            </tbody>
+        </table>
+        {%else%}
+        <div class="alert alert-danger" role="alert">暂时没有可查看的操作,可能该商品的操作还未被区块链收录,请稍后再试</div>
+        {%endif%}
+    </div>
+</div>
+</div>
+{%endblock%}
+
+{%block js%}
+<script>
+    $("#refresh_com").click(function () {
+        window.location.reload();
+    });
+</script>
+{%endblock%}}

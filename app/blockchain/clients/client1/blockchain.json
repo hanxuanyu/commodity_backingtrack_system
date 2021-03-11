@@ -1,0 +1,24 @@
+{
+    "chain": [
+        {
+            "index": 1,
+            "content": {},
+            "proof": 100,
+            "previous_hash": "0000xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        },
+        {
+            "index": 2,
+            "content": [
+                {
+                    "commodity": 21,
+                    "operator": 3,
+                    "option": "\u4e0a\u67b6",
+                    "time": "2020-04-19 23:54:47"
+                }
+            ],
+            "proof": 130809,
+            "previous_hash": "2c54cf5a99bddf446dca8b50d1536f6e3818225b1b9d6821a3c2f8a2971c903b"
+        }
+    ],
+    "length": 2
+}
